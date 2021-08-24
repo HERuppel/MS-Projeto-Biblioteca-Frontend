@@ -6,15 +6,20 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('sm')]: {
         width: 300,
         flexShrink: 0,
-      }
+      },
     },
-    drawerPaper: { width: 300 },
+    drawerPaper: {
+      width: 300,
+      backgroundColor: theme.palette.primary.dark
+    },
+
     header: {
       width: '100%',
       height: 70,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      color: '#E5e5e5'
     },
     itemText: {
       fontWeight: theme.typography.fontWeightBold
@@ -25,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: 70
     },
     activeNavLink: {
-      color: theme.palette.primary.main
+      color: theme.palette.common.white
     }
   })
 );
