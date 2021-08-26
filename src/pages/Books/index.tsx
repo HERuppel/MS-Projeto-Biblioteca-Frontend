@@ -1,11 +1,12 @@
 import { Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Loading } from '../../common';
+import Table from '../../components/Table';
 import { IBook } from '../../interfaces';
 import { api } from '../../services/api';
 
 const Books: React.FC = () => {
-  const [books, setBooks] = useState<IBook[]>()
+  const [books, setBooks] = useState<IBook[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -13,7 +14,6 @@ const Books: React.FC = () => {
       try {
         const res = await api.get('livro/recuperar')
         setBooks(res.data.data)
-        console.log(res.data.data)
       } catch (e) {
         console.log(e)
       } finally {
@@ -28,11 +28,7 @@ const Books: React.FC = () => {
       {
         loading
           ? <Loading loadingSize={50} />
-          : books?.map((book, index) => (
-            <div key={index}>
-              <Typography>{book.nome}</Typography>
-            </div>
-          ))
+          : <Table books={books} />
       }
     </div>
   )

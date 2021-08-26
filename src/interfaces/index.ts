@@ -8,3 +8,7 @@ export interface IBook {
   qtdAtual: number
   qtdEstoque: number
 }
+
+export interface IClient {
+
+}
