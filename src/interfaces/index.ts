@@ -9,6 +9,12 @@ export interface IBook {
   qtdEstoque: number
 }
 
+export interface IResponse {
+  success: boolean
+  message: string
+  data?: any
+}
+
 export interface IClient {
 
 }

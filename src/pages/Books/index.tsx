@@ -8,19 +8,21 @@ import { api } from '../../services/api';
 const Books: React.FC = () => {
   const [books, setBooks] = useState<IBook[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [update, setUpdate] = useState<boolean>(false);
 
   useEffect(() => {
     (async(): Promise<void> => {
       try {
-        const res = await api.get('livro/recuperar')
-        setBooks(res.data.data)
+        setLoading(true);
+        const res = await api.get('livro/recuperar');
+        setBooks(res.data.data);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     })();
-  }, [])
+  }, [update])
 
   return (
     <div>
@@ -28,7 +30,7 @@ const Books: React.FC = () => {
       {
         loading
           ? <Loading loadingSize={50} />
-          : <Table books={books} />
+          : <Table books={books} updateList={() => setUpdate(!update)} />
       }
     </div>
   )

@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useStyles from './styles';
 import { TableRow, TableCell, IconButton, TableContainer, Paper, Table as UITable, TableHead, TableBody, MenuItem, Menu } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
 
-import { IBook } from '../../interfaces';
-import { Loading } from '../../common';
+import { IBook, IResponse } from '../../interfaces';
+import { api } from '../../services/api';
 
 interface ITable {
   books: IBook[];
+  updateList: () => void;
 }
 
 interface IRow {
   book: IBook;
 }
 
-const Table = ({ books }: ITable): JSX.Element => {
+const Table = ({ books, updateList }: ITable): JSX.Element => {
   const classes = useStyles();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const Row = ({ book }: IRow): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -35,11 +35,12 @@ const Table = ({ books }: ITable): JSX.Element => {
 
     const handleDelete = async (book: IBook): Promise<void> => {
       try {
-        setLoading(true);
+        const res: IResponse = await api.delete(`livro/deletar/${book.id}`)
+
+        console.log(res)
+        updateList();
       } catch (e) {
         console.log(e);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -75,29 +76,26 @@ const Table = ({ books }: ITable): JSX.Element => {
 
   return (
     <TableContainer component={Paper} className={classes.container}>
-      {
-        loading
-          ? <Loading loadingSize={30} />
-          : <UITable aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Nome</TableCell>
-                  <TableCell align="left">Autor</TableCell>
-                  <TableCell align="left">Páginas</TableCell>
-                  <TableCell align="left">Editora</TableCell>
-                  <TableCell align="left">Edição</TableCell>
-                  <TableCell align="left">Quantidade</TableCell>
-                  <TableCell align="center">Ações</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {books.map((book: IBook) => (
-                    <Row key={book.id} book={book} />
-                  ))
-                }
-              </TableBody>
-            </UITable>
-      }
+      <UITable aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">Nome</TableCell>
+            <TableCell align="left">Autor</TableCell>
+            <TableCell align="left">Páginas</TableCell>
+            <TableCell align="left">Editora</TableCell>
+            <TableCell align="left">Edição</TableCell>
+            <TableCell align="left">Quantidade</TableCell>
+            <TableCell align="center">Ações</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {books.map((book: IBook) => (
+              <Row key={book.id} book={book} />
+            ))
+          }
+        </TableBody>
+      </UITable>
+
 
       {/* <TablePagination
         component="div"
