@@ -1,28 +1,28 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Loading } from '../../common';
 import Table from '../../components/Table';
-import { IBook } from '../../interfaces';
-import { api } from '../../services/api';
+import { useBook } from '../../hooks/bookApi';
 
 const Books: React.FC = () => {
-  const [books, setBooks] = useState<IBook[]>([])
+  const { load, bookList, currentPage } = useBook();
   const [loading, setLoading] = useState<boolean>(true)
   const [update, setUpdate] = useState<boolean>(false);
 
   useEffect(() => {
     (async(): Promise<void> => {
       try {
-        setLoading(true);
-        const res = await api.get('livro/recuperar');
-        setBooks(res.data.data);
+        await load();
       } catch (e) {
         console.log(e);
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     })();
-  }, [update])
+  }, [currentPage]);
+
+
 
   return (
     <div>
@@ -30,7 +30,7 @@ const Books: React.FC = () => {
       {
         loading
           ? <Loading loadingSize={50} />
-          : <Table books={books} updateList={() => setUpdate(!update)} />
+          : <Table bookList={bookList} updateList={() => setUpdate(!update)} />
       }
     </div>
   )

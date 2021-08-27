@@ -9,6 +9,11 @@ export interface IBook {
   qtdEstoque: number
 }
 
+export interface IBookList {
+  values: IBook[];
+  page: number;
+}
+
 export interface IResponse {
   success: boolean
   message: string

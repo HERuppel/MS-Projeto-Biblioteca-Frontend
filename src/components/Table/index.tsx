@@ -1,13 +1,15 @@
 import React from 'react';
 import useStyles from './styles';
 import { TableRow, TableCell, IconButton, TableContainer, Paper, Table as UITable, TableHead, TableBody, MenuItem, Menu } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
 import { MoreHoriz } from '@material-ui/icons';
 
-import { IBook, IResponse } from '../../interfaces';
+import { IBook, IBookList, IResponse } from '../../interfaces';
 import { api } from '../../services/api';
+import { useBook } from '../../hooks/bookApi';
 
 interface ITable {
-  books: IBook[];
+  bookList: IBookList[];
   updateList: () => void;
 }
 
@@ -15,8 +17,9 @@ interface IRow {
   book: IBook;
 }
 
-const Table = ({ books, updateList }: ITable): JSX.Element => {
+const Table = ({ bookList, updateList }: ITable): JSX.Element => {
   const classes = useStyles();
+  const { currentPage, setCurrentPage, pageCount } = useBook();
 
   const Row = ({ book }: IRow): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -89,23 +92,21 @@ const Table = ({ books, updateList }: ITable): JSX.Element => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {books.map((book: IBook) => (
-              <Row key={book.id} book={book} />
+        {
+            bookList
+            .filter((item: IBookList) => (
+                item.page === currentPage ? item : null
+            ))[0]?.values.map((book: IBook) => (
+                <Row key={book.id} book={book} />
             ))
-          }
+        }
         </TableBody>
       </UITable>
-
-
-      {/* <TablePagination
-        component="div"
-        count={100}
-        page={currentPage.pageNumber}
-        onPageChange={() => setCurrentPage({ ...currentPage, })}
-        labelRowsPerPage=''
-        rowsPerPage={3}
-
-      /> */}
+      <Pagination
+          count={pageCount}
+          page={currentPage + 1}
+          onChange={(e: any, value: number) => setCurrentPage(value - 1)}
+      />
     </TableContainer>
   );
 };
