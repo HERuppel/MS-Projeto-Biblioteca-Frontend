@@ -26,7 +26,6 @@ const Books: React.FC = () => {
 
   return (
     <div>
-      <Typography variant="h2">Books</Typography>
       {
         loading
           ? <Loading loadingSize={50} />

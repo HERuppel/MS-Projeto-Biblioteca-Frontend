@@ -14,6 +14,7 @@ interface ContextData {
     bookList: IBookList[];
 
     reset(): void;
+    create(book: IBook): void;
     remove(id: string): Promise<void>;
     setCurrentPage(page: number): void;
     load(params?: ILoadParams): Promise<void>;
@@ -32,6 +33,26 @@ export const BookListProvider: React.FC = ({ children }) => {
 
     const reset = () => { setBookList([]); }
 
+    const create = async (book: IBook): Promise<void> => {
+      const res = await api.post('livro/manter', { ...book })
+
+      const newBook: IBook = res.data.data;
+
+      const listCopy: IBookList[] = { ...bookList }
+
+      const newValues: IBook[] = listCopy[currentPage].values;
+
+      newValues.unshift(newBook);
+
+
+      const data: IBookList[] = [
+        ...bookList,
+        { page: currentPage, values: newValues }
+      ]
+
+      setBookList(data);
+    }
+
     const load = async (params: ILoadParams): Promise<void> => {
 
         const exists = bookList.filter((item: IBookList) => (
@@ -39,7 +60,7 @@ export const BookListProvider: React.FC = ({ children }) => {
         ));
         if (exists.length !== 0) return;
 
-        const url = '/livro/recuperar?' +
+        const url = 'livro/recuperar?' +
             `offset=${offset}&` +
             `page=${currentPage}&`
 
@@ -52,7 +73,7 @@ export const BookListProvider: React.FC = ({ children }) => {
 
         setBookList(data);
         data.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
-        setPageCount(Math.ceil(response.data.count/offset));
+        setPageCount(Math.ceil(response.data.data.count/offset));
     }
 
     const remove = async (id: string): Promise<void> => {
@@ -106,6 +127,7 @@ export const BookListProvider: React.FC = ({ children }) => {
                 pageCount,
                 bookList,
                 currentPage,
+                create,
                 load,
                 reset,
                 update,

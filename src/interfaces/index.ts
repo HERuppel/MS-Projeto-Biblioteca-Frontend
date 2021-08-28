@@ -1,10 +1,11 @@
 export interface IBook {
-  id: string
+  id?: string
   nome: string
   autor: string
   editora: string
   edicao: string
   paginas: number
+  cdd: number
   qtdAtual: number
   qtdEstoque: number
 }

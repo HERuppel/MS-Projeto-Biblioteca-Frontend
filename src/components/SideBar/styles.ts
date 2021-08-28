@@ -4,12 +4,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
       [theme.breakpoints.up('sm')]: {
-        width: 300,
+        width: 250,
         flexShrink: 0,
       },
     },
     drawerPaper: {
-      width: 300,
+      width: 250,
       backgroundColor: theme.palette.primary.dark
     },
 
@@ -22,15 +22,20 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#E5e5e5'
     },
     itemText: {
-      fontWeight: theme.typography.fontWeightBold
+      fontWeight: theme.typography.fontWeightBold,
     },
     navLink: {
       textDecoration: 'none',
-      color: '#202020',
-      gap: 70
+      color: theme.palette.common.white,
+      gap: 50,
+      transition: '300ms',
+
+      '&:hover': {
+        background: theme.palette.primary.main,
+      }
     },
     activeNavLink: {
-      color: theme.palette.common.white
+      background: theme.palette.primary.main
     }
   })
 );

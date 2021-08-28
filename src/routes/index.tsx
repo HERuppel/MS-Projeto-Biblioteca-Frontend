@@ -6,8 +6,8 @@ import Main from '../pages/Main'
 
 const Routes: React.FC = () => (
   <Switch>
-    <Redirect exact from="/" to="/main/list" />
-    <Redirect exact from="/main" to="/main/list" />
+    <Redirect exact from="/" to="/main/books" />
+    <Redirect exact from="/main" to="/main/books" />
     <Switch>
       <Route path="/main" component={Main} />
     </Switch>
