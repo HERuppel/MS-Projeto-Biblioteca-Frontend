@@ -57,11 +57,12 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
       <>
         <TableRow className={classes.root}>
           <TableCell component="th" scope="row">{book.nome}</TableCell>
-          <TableCell align="left">{book.autor}</TableCell>
-          <TableCell align="left">{book.paginas}</TableCell>
-          <TableCell align="left">{book.editora}</TableCell>
-          <TableCell align="left">{book.edicao}</TableCell>
-          <TableCell align="left">{book.qtdAtual}/{book.qtdEstoque}</TableCell>
+          <TableCell align="center">{book.autor}</TableCell>
+          <TableCell align="center">{book.paginas}</TableCell>
+          <TableCell align="center">{book.editora}</TableCell>
+          <TableCell align="center">{book.edicao}</TableCell>
+          <TableCell align="center">{book.cdd}</TableCell>
+          <TableCell align="center">{book.qtdAtual}/{book.qtdEstoque}</TableCell>
           <TableCell align="center">
             <IconButton aria-label="expand row" size="small" onClick={handleClick}>
               <MoreHoriz />
@@ -85,20 +86,21 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
 
   return (
     <div>
-      <div>
-        <Typography variant="h2">Books</Typography>
-        <Button onMouseOver={loadFormModal} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
+      <div className={classes.header}>
+        <Typography color="primary" variant="h2">Livros</Typography>
+        <Button className={classes.addButton} onMouseOver={loadFormModal} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
       </div>
       <TableContainer component={Paper} className={classes.container}>
         <UITable aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">Nome</TableCell>
-              <TableCell align="left">Autor</TableCell>
-              <TableCell align="left">Páginas</TableCell>
-              <TableCell align="left">Editora</TableCell>
-              <TableCell align="left">Edição</TableCell>
-              <TableCell align="left">Quantidade</TableCell>
+              <TableCell align="center">Nome</TableCell>
+              <TableCell align="center">Autor</TableCell>
+              <TableCell align="center">Páginas</TableCell>
+              <TableCell align="center">Editora</TableCell>
+              <TableCell align="center">Edição</TableCell>
+              <TableCell align="center">Classificação (CDD)</TableCell>
+              <TableCell align="center">Quantidade</TableCell>
               <TableCell align="center">Ações</TableCell>
             </TableRow>
           </TableHead>

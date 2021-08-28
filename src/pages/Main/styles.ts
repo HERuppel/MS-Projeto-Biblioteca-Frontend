@@ -3,17 +3,18 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      width: '100%'
-    },
-    content: {
+      width: '100%',
+      display: 'flex',
+      height: '100vh',
+      background: '#171717',
     },
     toolbar: theme.mixins.toolbar,
     main: {
-      width: '100%',
-      textAlign: 'center',
       flexGrow: 1,
       display: 'flex',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      textAlign: 'center',
+      alignItems: 'center'
     }
   })
 );

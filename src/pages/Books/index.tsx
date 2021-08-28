@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Loading } from '../../common';
 import Table from '../../components/Table';
 import { useBook } from '../../hooks/bookApi';
+import useStyles from './styles';
 
 const Books: React.FC = () => {
+  const classes = useStyles();
   const { load, bookList, currentPage } = useBook();
   const [loading, setLoading] = useState<boolean>(true)
   const [update, setUpdate] = useState<boolean>(false);
@@ -25,11 +27,13 @@ const Books: React.FC = () => {
 
 
   return (
-    <div>
+    <div className={classes.container}>
       {
         loading
           ? <Loading loadingSize={50} />
-          : <Table bookList={bookList} updateList={() => setUpdate(!update)} />
+          : <div className={classes.content}>
+              <Table bookList={bookList} updateList={() => setUpdate(!update)} />
+            </div>
       }
     </div>
   )
