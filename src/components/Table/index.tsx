@@ -47,7 +47,7 @@ const Table = ({ bookList }: ITable): JSX.Element => {
         await remove(book.id as string);
 
       } catch (e) {
-        console.log(e);
+        console.log(e?.message);
       }
     };
 
