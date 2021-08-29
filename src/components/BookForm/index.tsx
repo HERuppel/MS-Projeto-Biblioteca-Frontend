@@ -44,12 +44,17 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm)
     }
   }
 
+  const handleClose = () => {
+    reset({} as IBook);
+    onClose();
+  }
+
   const body = (
     <div className={classes.container}>
       <div className={classes.header}>
         <Close style={{ color: 'transparent' }} />
         <Typography color="primary" style={{ padding: '20px 0 20px 0' }} variant="h4">{bookToEdit ? 'Editar' : 'Adicionar'} Livro</Typography>
-        <button className={classes.close} onClick={onClose}>
+        <button className={classes.close} onClick={handleClose}>
           <Close style={{ fontSize: 40 }} />
         </button>
       </div>
