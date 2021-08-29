@@ -26,6 +26,7 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
   const classes = useStyles();
   const { currentPage, setCurrentPage, pageCount } = useBook();
   const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [bookToEdit, setBookToEdit] = useState<IBook>({} as IBook);
 
   const Row = ({ book }: IRow): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -39,7 +40,8 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
     };
 
     const handleEdit = async (book: IBook): Promise<void> => {
-      console.log('editar')
+      setBookToEdit(book);
+      setFormOpen(true)
     }
 
     const handleDelete = async (book: IBook): Promise<void> => {
@@ -91,7 +93,7 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
         <Button className={classes.addButton} onMouseOver={loadFormModal} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
       </div>
       <TableContainer component={Paper} className={classes.container}>
-        <UITable aria-label="collapsible table">
+        <UITable>
           <TableHead>
             <TableRow>
               <TableCell align="center">Nome</TableCell>
@@ -115,14 +117,16 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
           }
           </TableBody>
         </UITable>
-        <Pagination
-            count={pageCount}
-            page={currentPage + 1}
-            onChange={(e: any, value: number) => setCurrentPage(value - 1)}
-        />
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Pagination
+              count={pageCount}
+              page={currentPage + 1}
+              onChange={(e: any, value: number) => setCurrentPage(value - 1)}
+          />
+        </div>
       </TableContainer>
       <Suspense fallback={<Loading loadingSize={30} />}>
-        {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} />}
+        {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} bookToEdit={bookToEdit} />}
       </Suspense>
     </div>
   );

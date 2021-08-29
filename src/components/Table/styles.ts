@@ -22,12 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
     addButton: {
       width: 200,
       height: 40,
-      background: theme.palette.primary.dark,
+      background: theme.palette.primary.main,
       color: theme.palette.common.white,
       transition: '200ms',
 
       '&:hover': {
-        background: theme.palette.primary.main
+        background: theme.palette.primary.dark
       }
     },
     box: {

@@ -4,10 +4,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       width: '100%',
+      alignSelf: 'center'
     },
     content: {
-      display: 'flex',
-      justifyContent: 'center'
     },
   })
 )

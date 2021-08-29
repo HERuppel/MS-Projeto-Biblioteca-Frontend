@@ -11,14 +11,15 @@ import { useBook } from '../../hooks/bookApi';
 interface IBookForm {
   open: boolean;
   onClose: () => void;
+  bookToEdit: IBook;
 }
 
-const BookForm: React.FC<IBookForm> = ({ open, onClose }: IBookForm) => {
+const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm) => {
   const classes = useStyles();
-  const { create } = useBook();
+  const { create, update } = useBook();
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, reset } = useForm<IBook>();
+  const { register, handleSubmit, reset } = useForm<IBook>({ defaultValues: bookToEdit ? { ...bookToEdit } : { } as IBook });
 
   const onSubmit: SubmitHandler<IBook> = async (data, e): Promise<void> => {
     e?.preventDefault();
@@ -32,7 +33,9 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose }: IBookForm) => {
 
     try {
       setLoading(true);
-      await create(data);
+      bookToEdit
+        ? await update({ id: bookToEdit?.id, data})
+        : await create(data);
     } catch (e) {
       setError(e);
     } finally {
@@ -45,7 +48,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose }: IBookForm) => {
     <div className={classes.container}>
       <div className={classes.header}>
         <Close style={{ color: 'transparent' }} />
-        <Typography color="primary" style={{ padding: '20px 0 20px 0' }} variant="h4">Adicionar Livro</Typography>
+        <Typography color="primary" style={{ padding: '20px 0 20px 0' }} variant="h4">{bookToEdit ? 'Editar' : 'Adicionar'} Livro</Typography>
         <button className={classes.close} onClick={onClose}>
           <Close style={{ fontSize: 40 }} />
         </button>

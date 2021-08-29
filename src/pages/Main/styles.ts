@@ -4,17 +4,14 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       width: '100%',
-      display: 'flex',
       height: '100vh',
-      background: '#171717',
+      display: 'flex',
+      background: theme.palette.common.white,
     },
     toolbar: theme.mixins.toolbar,
     main: {
       flexGrow: 1,
-      display: 'flex',
-      justifyContent: 'center',
-      textAlign: 'center',
-      alignItems: 'center'
+      padding: theme.spacing(5)
     }
   })
 );

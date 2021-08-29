@@ -18,7 +18,12 @@ interface ContextData {
     remove(id: string): Promise<void>;
     setCurrentPage(page: number): void;
     load(params?: ILoadParams): Promise<void>;
-    update(id: string, data: Object): Promise<void>;
+    update({ id, data }: IUpdate): Promise<void>;
+}
+
+interface IUpdate {
+  data: IBook;
+  id?: string;
 }
 
 const bookListContext = createContext<ContextData>({} as ContextData);
@@ -38,11 +43,26 @@ export const BookListProvider: React.FC = ({ children }) => {
 
       const newBook: IBook = res.data.data;
 
+      console.log(currentPage, pageCount);
+
+      if (bookList[pageCount - 1].values.length === 10) {
+        const newValues: IBook[] = [newBook]
+
+        const data: IBookList[] = [
+          ...bookList,
+          { page: currentPage + 1, values: newValues }
+        ]
+
+        setBookList(data);
+        setPageCount(pageCount + 1);
+        return;
+      };
+
       const listCopy: IBookList[] = { ...bookList }
 
-      const newValues: IBook[] = listCopy[currentPage].values;
+      const newValues: IBook[] = listCopy[pageCount - 1].values;
 
-      newValues.unshift(newBook);
+      newValues.push(newBook);
 
 
       const data: IBookList[] = [
@@ -97,19 +117,19 @@ export const BookListProvider: React.FC = ({ children }) => {
         setPageCount(Math.ceil(response.data.count / offset));
     }
 
-    const update = async (id: string, data: Object): Promise<void> => {
+    const update = async ({ id, data }: IUpdate): Promise<void> => {
 
-        const response = await api.put(`/bovino/${id}`, data);
+        const response = await api.post(`livro/manter`,{ ...data, id });
 
         const currentPageList = bookList.filter((item: IBookList) =>
             item.page === currentPage ? item : null
         );
 
         const indexToUse = currentPageList[0]?.values?.findIndex(
-            (item: IBook) => item.id === response.data.id
+            (item: IBook) => item.id === response.data.data.id
         );
 
-        currentPageList[0].values[indexToUse] = { ...response.data };
+        currentPageList[0].values[indexToUse] = { ...response.data.data };
 
         const newList = bookList.filter((item: IBookList) =>
             item.page !== currentPage ? item : null

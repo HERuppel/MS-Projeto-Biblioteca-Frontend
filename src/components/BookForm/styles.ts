@@ -57,11 +57,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       width: '70%',
-      background: theme.palette.primary.dark,
+      background: theme.palette.primary.main,
       color: theme.palette.common.white,
 
       '&:hover': {
-        background: theme.palette.primary.main
+        background: theme.palette.primary.dark
       }
     }
   })
