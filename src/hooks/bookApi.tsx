@@ -98,7 +98,7 @@ export const BookListProvider: React.FC = ({ children }) => {
 
     const remove = async (id: string): Promise<void> => {
 
-        await api.delete(`/bovino/${id}`);
+        await api.delete(`livro/deletar/${id}`);
 
         const isLastPage = bookList.filter((item: IBookList) =>
             item.page === pageCount-1 ? item : null
@@ -110,11 +110,11 @@ export const BookListProvider: React.FC = ({ children }) => {
             return;
         }
 
-        const url = `/bovino?page=${currentPage}&limite=${offset}`;
+        const url = `livro/recuperar?offset=${offset}&page=${currentPage}`;
         const response = await api.get(url);
 
-        setBookList([{ page: currentPage, values: response.data.list }]);
-        setPageCount(Math.ceil(response.data.count / offset));
+        setBookList([{ page: currentPage, values: response.data.data.itens }]);
+        setPageCount(Math.ceil(response.data.data.count / offset));
     }
 
     const update = async ({ id, data }: IUpdate): Promise<void> => {

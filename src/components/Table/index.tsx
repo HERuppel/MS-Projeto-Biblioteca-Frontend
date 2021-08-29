@@ -4,8 +4,7 @@ import { TableRow, TableCell, IconButton, TableContainer, Paper, Table as UITabl
 import { Pagination } from '@material-ui/lab';
 import { MoreHoriz } from '@material-ui/icons';
 
-import { IBook, IBookList, IResponse } from '../../interfaces';
-import { api } from '../../services/api';
+import { IBook, IBookList } from '../../interfaces';
 import { useBook } from '../../hooks/bookApi';
 import { Loading } from '../../common';
 
@@ -15,16 +14,15 @@ const BookForm = lazy(loadFormModal);
 
 interface ITable {
   bookList: IBookList[];
-  updateList: () => void;
 }
 
 interface IRow {
   book: IBook;
 }
 
-const Table = ({ bookList, updateList }: ITable): JSX.Element => {
+const Table = ({ bookList }: ITable): JSX.Element => {
   const classes = useStyles();
-  const { currentPage, setCurrentPage, pageCount } = useBook();
+  const { currentPage, setCurrentPage, pageCount, remove } = useBook();
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [bookToEdit, setBookToEdit] = useState<IBook>({} as IBook);
 
@@ -46,10 +44,8 @@ const Table = ({ bookList, updateList }: ITable): JSX.Element => {
 
     const handleDelete = async (book: IBook): Promise<void> => {
       try {
-        const res: IResponse = await api.delete(`livro/deletar/${book.id}`)
+        await remove(book.id as string);
 
-        console.log(res)
-        updateList();
       } catch (e) {
         console.log(e);
       }
