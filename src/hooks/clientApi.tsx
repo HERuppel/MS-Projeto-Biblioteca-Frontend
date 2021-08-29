@@ -75,6 +75,10 @@ export const BookListProvider: React.FC = ({ children }) => {
 
     const load = async (params: ILoadParams): Promise<void> => {
 
+        const exists = bookList.filter((item: IBookList) => (
+            item.page === currentPage? item : null
+        ));
+        if (exists.length !== 0) return;
 
         const url = 'livro/recuperar?' +
             `offset=${offset}&` +

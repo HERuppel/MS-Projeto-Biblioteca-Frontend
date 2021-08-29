@@ -28,7 +28,9 @@ const Books: React.FC = () => {
     <div className={classes.container}>
       {
         loading
-          ? <Loading loadingSize={50} />
+          ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }}>
+              <Loading loadingSize={50} />
+            </div>
           : <div className={classes.content}>
               <Table bookList={bookList} />
             </div>

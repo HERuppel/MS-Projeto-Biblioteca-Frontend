@@ -4,10 +4,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       width: '30%',
-      height: '75%',
       background: theme.palette.common.white,
       borderRadius: 10,
       textAlign: 'center',
+      overflowY: 'auto'
     },
     header: {
       display: 'flex',
@@ -39,10 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: 40,
     },
     formContainer: {
-      height: '80%',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between'
     },
     input: {
       width: '80%',
@@ -59,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '70%',
       background: theme.palette.primary.main,
       color: theme.palette.common.white,
+      marginBottom: 20,
 
       '&:hover': {
         background: theme.palette.primary.dark

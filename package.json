@@ -15,7 +15,7 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
     "postinstall": "tsc",
     "dev": "react-scripts start",
     "build": "react-scripts build",

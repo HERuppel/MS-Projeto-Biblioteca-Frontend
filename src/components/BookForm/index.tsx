@@ -58,8 +58,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm)
           <Close style={{ fontSize: 40 }} />
         </button>
       </div>
-      <form className={classes.formContainer} onSubmit={handleSubmit(onSubmit)}>
-        <div className={classes.form}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <TextField
             type="text"
             id="outlined-basic"
@@ -158,12 +157,9 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm)
             className={classes.input}
             {...register('qtdEstoque' )}
           />
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Button className={classes.button} type="submit">
             {loading ? <Loading loadingSize={16} /> : 'Salvar'}
           </Button>
-        </div>
       </form>
     </div>
   );
