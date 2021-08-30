@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import useStyles from './styles';
 import { TableRow, TableCell, IconButton, TableContainer, Paper, Table as UITable, TableHead, TableBody, MenuItem, Menu, Typography, Button } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
@@ -6,11 +6,8 @@ import { MoreHoriz } from '@material-ui/icons';
 
 import { IBook, IBookList } from '../../interfaces';
 import { useBook } from '../../hooks/bookApi';
-import { Loading } from '../../common';
 
-const loadFormModal = () => import('../BookForm');
-
-const BookForm = lazy(loadFormModal);
+import BookForm from '../BookForm';
 
 interface ITable {
   bookList: IBookList[];
@@ -86,7 +83,7 @@ const Table = ({ bookList }: ITable): JSX.Element => {
     <div>
       <div className={classes.header}>
         <Typography color="primary" variant="h2">Livros</Typography>
-        <Button className={classes.addButton} onMouseOver={loadFormModal} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
+        <Button className={classes.addButton} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
       </div>
       <TableContainer component={Paper} className={classes.container}>
         <UITable>
@@ -121,9 +118,7 @@ const Table = ({ bookList }: ITable): JSX.Element => {
           />
         </div>
       </TableContainer>
-      <Suspense fallback={<Loading loadingSize={30} />}>
-        {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} bookToEdit={bookToEdit} />}
-      </Suspense>
+      {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} bookToEdit={bookToEdit} />}
     </div>
   );
 };
