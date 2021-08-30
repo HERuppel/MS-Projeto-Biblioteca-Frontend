@@ -20,11 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 'bold',
     },
     addButton: {
-      width: 200,
-      height: 40,
+      width: '20%',
       background: theme.palette.primary.main,
       color: theme.palette.common.white,
-      transition: '200ms',
 
       '&:hover': {
         background: theme.palette.primary.dark
