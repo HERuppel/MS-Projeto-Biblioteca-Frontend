@@ -20,6 +20,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm)
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset } = useForm<IBook>({ defaultValues: bookToEdit ? { ...bookToEdit } : { } as IBook });
+  const edit = Object.values(bookToEdit).length !== 0 ? true : false;
 
   const onSubmit: SubmitHandler<IBook> = async (data, e): Promise<void> => {
     e?.preventDefault();
@@ -33,7 +34,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm)
 
     try {
       setLoading(true);
-      bookToEdit
+      edit
         ? await update({ id: bookToEdit?.id, data})
         : await create(data);
     } catch (e) {

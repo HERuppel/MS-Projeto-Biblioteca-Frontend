@@ -4,6 +4,7 @@ import { Loading } from '../../common';
 import Table from '../../components/Table';
 import { useBook } from '../../hooks/bookApi';
 import useStyles from './styles';
+import LottieLoading from '../../components/LottieLoading';
 
 const Books: React.FC = () => {
   const classes = useStyles();
@@ -13,11 +14,12 @@ const Books: React.FC = () => {
   useEffect(() => {
     (async(): Promise<void> => {
       try {
+        setLoading(true);
         await load();
       } catch (e) {
         console.log(e);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     })();
   }, [currentPage]);
@@ -29,7 +31,7 @@ const Books: React.FC = () => {
       {
         loading
           ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }}>
-              <Loading loadingSize={50} />
+              <LottieLoading />
             </div>
           : <div className={classes.content}>
               <Table bookList={bookList} />

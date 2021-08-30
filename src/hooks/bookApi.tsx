@@ -2,11 +2,6 @@ import React, { createContext, useState, useContext } from 'react';
 import { IBook, IBookList } from '../interfaces';
 import { api } from '../services/api';
 
-interface ILoadParams {
-  search: string;
-  searchByName: boolean;
-}
-
 interface ContextData {
     isEmpty: boolean;
     pageCount: number;
@@ -17,7 +12,7 @@ interface ContextData {
     create(book: IBook): void;
     remove(id: string): Promise<void>;
     setCurrentPage(page: number): void;
-    load(params?: ILoadParams): Promise<void>;
+    load(): Promise<void>;
     update({ id, data }: IUpdate): Promise<void>;
 }
 
@@ -39,42 +34,12 @@ export const BookListProvider: React.FC = ({ children }) => {
     const reset = () => { setBookList([]); }
 
     const create = async (book: IBook): Promise<void> => {
-      const res = await api.post('livro/manter', { ...book })
+      await api.post('livro/manter', { ...book })
 
-      const newBook: IBook = res.data.data;
-
-      console.log(currentPage, pageCount);
-
-      if (bookList[pageCount - 1].values.length === 10) {
-        const newValues: IBook[] = [newBook]
-
-        const data: IBookList[] = [
-          ...bookList,
-          { page: currentPage + 1, values: newValues }
-        ]
-
-        setBookList(data);
-        setPageCount(pageCount + 1);
-        return;
-      };
-
-      const listCopy: IBookList[] = { ...bookList }
-
-      const newValues: IBook[] = listCopy[pageCount - 1].values;
-
-      newValues.push(newBook);
-
-
-      const data: IBookList[] = [
-        ...bookList,
-        { page: currentPage, values: newValues }
-      ]
-
-      setBookList(data);
+      await load();
     }
 
-    const load = async (params: ILoadParams): Promise<void> => {
-
+    const load = async (): Promise<void> => {
 
         const url = 'livro/recuperar?' +
             `offset=${offset}&` +
@@ -83,7 +48,6 @@ export const BookListProvider: React.FC = ({ children }) => {
         const response = await api.get(url);
 
         const data: IBookList[] = [
-            ...bookList,
             { page: currentPage, values: response.data.data.itens }
         ];
 
