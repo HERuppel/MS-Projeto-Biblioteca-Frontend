@@ -3,8 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 
 import SideBar from '../../components/SideBar'
 import { BookListProvider } from '../../hooks/bookApi';
+import { EmployeeListProvider } from '../../hooks/employeeApi';
 import Books from '../Books';
-import Clients from '../Clients';
+import Employees from '../Employees';
 import useStyles from './styles'
 
 const Main: React.FC = () => {
@@ -18,7 +19,9 @@ const Main: React.FC = () => {
           <BookListProvider>
             <Route path="/main/books" exact component={Books} />
           </BookListProvider>
-          <Route path="/main/clients" exact component={Clients} />
+          <EmployeeListProvider>
+            <Route path="/main/employees" exact component={Employees} />
+          </EmployeeListProvider>
         </Switch>
       </main>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Drawer, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { Book, Person, Group, MenuBook } from '@material-ui/icons';
+import { Group, MenuBook } from '@material-ui/icons';
 
 import useStyles from './styles';
 
@@ -24,9 +24,9 @@ const SideBar: React.FC = () => {
           <MenuBook style={{ fontSize: 35, paddingRight: 6 }} />
           <ListItemText className={classes.itemText} primary="Livros" />
         </ListItem>
-        <ListItem className={classes.navLink} component={NavLink} to="/main/clients" activeClassName={classes.activeNavLink} key="clients">
+        <ListItem className={classes.navLink} component={NavLink} to="/main/employees" activeClassName={classes.activeNavLink} key="employees">
           <Group style={{ fontSize: 35 }} />
-          <ListItemText className={classes.itemText} primary="Clientes" />
+          <ListItemText className={classes.itemText} primary="Funcionários" />
         </ListItem>
       </List>
     </div>

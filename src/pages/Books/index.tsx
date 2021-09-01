@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-import { Loading } from '../../common';
 import Table from '../../components/Table';
 import { useBook } from '../../hooks/bookApi';
 import useStyles from './styles';
