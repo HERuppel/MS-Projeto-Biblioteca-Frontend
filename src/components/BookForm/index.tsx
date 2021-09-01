@@ -12,9 +12,22 @@ interface IBookForm {
   open: boolean;
   onClose: () => void;
   bookToEdit: IBook;
+  clearBook: () => void;
 }
 
-const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm) => {
+const initialState = {
+  autor: '',
+  cdd: 0,
+  edicao: '',
+  editora: '',
+  nome: '',
+  paginas: 0,
+  qtdAtual: 0,
+  qtdEstoque: 0,
+  id: ''
+}
+
+const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit, clearBook }: IBookForm) => {
   const classes = useStyles();
   const { create, update } = useBook();
   const [error, setError] = useState<string>('');
@@ -40,14 +53,20 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit }: IBookForm)
     } catch (e) {
       setError(e);
     } finally {
-      reset({} as IBook);
+      resetForm();
       setLoading(false);
     }
   }
 
+
   const handleClose = () => {
-    reset({} as IBook);
+    resetForm();
     onClose();
+  }
+
+  const resetForm = () => {
+    reset({ ...initialState });
+    clearBook();
   }
 
   const body = (

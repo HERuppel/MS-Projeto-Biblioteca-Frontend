@@ -118,7 +118,7 @@ const Table = ({ bookList }: ITable): JSX.Element => {
           />
         </div>
       </TableContainer>
-      {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} bookToEdit={bookToEdit} />}
+      {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} bookToEdit={bookToEdit} clearBook={() => setBookToEdit({} as IBook)} />}
     </div>
   );
 };
