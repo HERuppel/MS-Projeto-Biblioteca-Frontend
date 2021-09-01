@@ -81,7 +81,7 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
 
         const data: IEmployeeList[] = [
             ...employeeList,
-            { page: currentPage, values: response.data.data.itens }
+            { page: currentPage, values: response.data.data }
         ];
 
         setEmployeeList(data);
@@ -106,7 +106,7 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
         const url = 'funcionario/recuperar';
         const response = await api.get(url);
 
-        setEmployeeList([{ page: currentPage, values: response.data.data.itens }]);
+        setEmployeeList([{ page: currentPage, values: response.data.data }]);
         setPageCount(Math.ceil(response.data.data.length / offset));
     }
 

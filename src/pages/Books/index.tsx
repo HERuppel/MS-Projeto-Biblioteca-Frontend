@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-import Table from '../../components/Table';
+import BookTable from '../../components/BookTable';
 import { useBook } from '../../hooks/bookApi';
 import useStyles from './styles';
 import LottieLoading from '../../components/LottieLoading';
@@ -33,7 +33,7 @@ const Books: React.FC = () => {
               <LottieLoading />
             </div>
           : <div className={classes.content}>
-              <Table bookList={bookList} />
+              <BookTable bookList={bookList} />
             </div>
       }
     </div>

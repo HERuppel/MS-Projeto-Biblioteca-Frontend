@@ -9,7 +9,7 @@ import { useBook } from '../../hooks/bookApi';
 
 import BookForm from '../BookForm';
 
-interface ITable {
+interface IBookTable {
   bookList: IBookList[];
 }
 
@@ -17,7 +17,7 @@ interface IRow {
   book: IBook;
 }
 
-const Table = ({ bookList }: ITable): JSX.Element => {
+const BookTable = ({ bookList }: IBookTable): JSX.Element => {
   const classes = useStyles();
   const { currentPage, setCurrentPage, pageCount, remove } = useBook();
   const [formOpen, setFormOpen] = useState<boolean>(false);
@@ -123,4 +123,4 @@ const Table = ({ bookList }: ITable): JSX.Element => {
   );
 };
 
-export default Table;
+export default BookTable;

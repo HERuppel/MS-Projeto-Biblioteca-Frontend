@@ -19,6 +19,8 @@ const Main: React.FC = () => {
           <BookListProvider>
             <Route path="/main/books" exact component={Books} />
           </BookListProvider>
+        </Switch>
+        <Switch>
           <EmployeeListProvider>
             <Route path="/main/employees" exact component={Employees} />
           </EmployeeListProvider>
