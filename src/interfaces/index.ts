@@ -23,15 +23,13 @@ export interface IResponse {
 
 export interface IEmployee {
   situacao: number
-  usuario: {
-    id: string
-    nome: string
-    email: string
-    telefone: string
-    cpf: string
-    nascimento: string
-    grupousuario: string
-  }
+  id?: string
+  nome: string
+  email: string
+  telefone: string
+  cpf: string
+  nascimento: string
+  grupousuario: string
 }
 
 export interface IEmployeeList {

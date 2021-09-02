@@ -119,7 +119,7 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
         );
 
         const indexToUse = currentPageList[0]?.values?.findIndex(
-            (item: IEmployee) => item.usuario.id === response.data.data.id
+            (item: IEmployee) => item.id === response.data.data.id
         );
 
         currentPageList[0].values[indexToUse] = { ...response.data.data };

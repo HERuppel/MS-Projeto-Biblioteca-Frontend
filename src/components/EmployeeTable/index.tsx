@@ -6,6 +6,7 @@ import { MoreHoriz } from '@material-ui/icons';
 import { IEmployee, IEmployeeList } from '../../interfaces';
 import useStyles from './styles';
 import { useEmployee } from '../../hooks/employeeApi';
+import EmployeeForm from '../EmployeeForm';
 
 interface IEmployeeTable {
   employeeList: IEmployeeList[];
@@ -39,7 +40,7 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
 
     const handleDelete = async (employee: IEmployee): Promise<void> => {
       try {
-        await remove(employee.usuario.id as string);
+        await remove(employee.id as string);
 
       } catch (e) {
         console.log(e?.message);
@@ -49,12 +50,12 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
     return (
       <>
         <TableRow className={classes.root}>
-          <TableCell component="th" scope="row">{employee.usuario.nome}</TableCell>
-          <TableCell align="center">{employee.usuario.email}</TableCell>
-          <TableCell align="center">{employee.usuario.telefone}</TableCell>
-          <TableCell align="center">{employee.usuario.cpf}</TableCell>
-          <TableCell align="center">{employee.usuario.nascimento}</TableCell>
-          <TableCell align="center">{employee.usuario.grupousuario}</TableCell>
+          <TableCell component="th" scope="row">{employee.nome}</TableCell>
+          <TableCell align="center">{employee.email}</TableCell>
+          <TableCell align="center">{employee.telefone}</TableCell>
+          <TableCell align="center">{employee.cpf}</TableCell>
+          <TableCell align="center">{employee.nascimento}</TableCell>
+          <TableCell align="center">{employee.grupousuario}</TableCell>
           <TableCell align="center">{employee.situacao}</TableCell>
           <TableCell align="center">
             <IconButton aria-label="expand row" size="small" onClick={handleClick}>
@@ -79,8 +80,8 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
   return (
     <div>
     <div className={classes.header}>
-      <Typography color="primary" variant="h2">Livros</Typography>
-      <Button className={classes.addButton} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
+      <Typography color="primary" variant="h2">Funcionários</Typography>
+      <Button className={classes.addButton} onClick={() => setFormOpen(true)}>Adicionar Funcionário</Button>
     </div>
     <TableContainer component={Paper} className={classes.container}>
       <UITable>
@@ -102,7 +103,7 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
             .filter((item: IEmployeeList) => (
                 item.page === currentPage ? item : null
             ))[0]?.values.map((employee: IEmployee) => (
-                <Row key={employee.usuario.id} employee={employee} />
+                <Row key={employee.id} employee={employee} />
             ))
         }
         </TableBody>
@@ -115,7 +116,7 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
         />
       </div>
     </TableContainer>
-    {/* {formOpen && <BookForm open={formOpen} onClose={() => setFormOpen(false)} bookToEdit={bookToEdit} clearBook={() => setEmployeeToEdit({} as IBook)} />} */}
+    {formOpen && <EmployeeForm open={formOpen} onClose={() => setFormOpen(false)} employeeToEdit={employeeToEdit} clearEmployee={() => setEmployeeToEdit({} as IEmployee)} />}
   </div>
   )
 }
