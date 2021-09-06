@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     addButton: {
       width: '20%',
       background: theme.palette.primary.main,
-      color: theme.palette.common.white,
+      color: '#FFF',
 
       '&:hover': {
         background: theme.palette.primary.dark
@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 'bold'
       }
     },
+    swal: {
+      zIndex: 10000,
+      fontFamily: 'Roboto'
+    }
   })
 )
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, TextField, Button, Typography } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { IEmployee } from '../../interfaces';
 import useStyles from './styles';
 import { Loading } from '../../common';
@@ -31,7 +31,7 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
   const { create, update } = useEmployee();
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, reset } = useForm<IEmployee>({ defaultValues: employeeToEdit ? { ...employeeToEdit } : {} as IEmployee });
+  const { register, handleSubmit, reset, control } = useForm<IEmployee>({ defaultValues: employeeToEdit ? { ...employeeToEdit } : {} as IEmployee });
   const edit = Object.values(employeeToEdit).length !== 0 ? true : false;
 
   const onSubmit: SubmitHandler<IEmployee> = async (data, e): Promise<void> => {
@@ -41,7 +41,6 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
     if (!data.telefone) { setError('Insira a edição'); return; }
     if (!data.cpf) { setError('Insira a editora'); return; }
     if (!data.nascimento) { setError('Insira o CDD'); return; }
-    if (!data.grupousuario) { setError('Insira a quantidade de páginas'); return; }
 
     try {
       setLoading(true);
@@ -67,11 +66,45 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
     clearEmployee();
   }
 
+  const phoneMask = (value: string): string => {
+    let r = value.replace(/\D/g, '');
+    r = r.replace(/^0/, '');
+
+    if (r.length > 11) {
+      r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, '($1) $2-$3');
+    } else if (r.length > 7) {
+      r = r.replace(/^(\d\d)(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+    } else if (r.length > 2) {
+      r = r.replace(/^(\d\d)(\d{0,5})/, '($1) $2');
+    } else if (value.trim() !== '') {
+      r = r.replace(/^(\d*)/, '($1');
+    }
+    return r;
+  };
+
+  const cpfMask = (cpf: string): string =>{
+    let r = cpf.replace(/\D/g, '');
+    r = r.replace(/^0/, '');
+
+    if (r.length > 10) {
+      r = r.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
+    return r;
+  }
+
+  const newDate = (): string => {
+    const date = new Date();
+
+    const fmDate = date.toISOString().split('T')[0];
+
+    return fmDate;
+  }
+
   const body = (
     <div className={classes.container}>
       <div className={classes.header}>
         <Close style={{ color: 'transparent' }} />
-        <Typography color="primary" style={{ padding: '20px 0 20px 0' }} variant="h4">{employeeToEdit ? 'Editar' : 'Adicionar'} Livro</Typography>
+        <Typography color="primary" style={{ padding: '20px 0 20px 0' }} variant="h4">{edit ? 'Editar' : 'Adicionar'} Funcionário</Typography>
         <button className={classes.close} onClick={handleClose}>
           <Close style={{ fontSize: 40 }} />
         </button>
@@ -108,72 +141,81 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
           <TextField
             type="text"
             id="outlined-basic"
-            label="Telefone"
+            label="Senha"
             variant="outlined"
             size="small"
-            error={error === 'Insira o telefone'}
-            helperText={error === 'Insira o telefone' && error}
+            error={error === 'Insira o senha'}
+            helperText={error === 'Insira o senha' && error}
             InputProps={{
               autoComplete: 'off'
             }}
             className={classes.input}
-            {...register('telefone')}
+            {...register('senha' )}
           />
-          <TextField
-            type="text"
-            id="outlined-basic"
-            label="CPF"
-            variant="outlined"
-            size="small"
-            error={error === 'Insira o CPF'}
-            helperText={error === 'Insira o CPF' && error}
-            InputProps={{
-              autoComplete: 'off'
-            }}
-            className={classes.input}
-            {...register('cpf')}
+          <Controller
+            name="telefone"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                type="text"
+                id="outlined-basic"
+                label="Telefone"
+                variant="outlined"
+                size="small"
+                inputProps={{
+                  maxLength: 15, //11 numbers + special characters
+                  autoComplete: 'off'
+                }}
+                error={error === 'Insira o telefone'}
+                helperText={error === 'Insira o telefone' ? error : 'Somente números'}
+                value={value ? phoneMask(value) : ''}
+                onChange={onChange}
+                className={classes.input}
+              />
+            )}
           />
-          <TextField
-            type="text"
-            id="outlined-basic"
-            label="Data de nascimento"
-            variant="outlined"
-            size="small"
-            error={error === 'Insira a data de nascimento'}
-            helperText={error === 'Insira a data de nascimento' && error}
-            InputProps={{
-              autoComplete: 'off'
-            }}
-            className={classes.input}
-            {...register('nascimento')}
+          <Controller
+            name="cpf"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                type="text"
+                id="outlined-basic"
+                label="CPF"
+                value={value ? cpfMask(value) : ''}
+                onChange={onChange}
+                variant="outlined"
+                size="small"
+                error={error === 'Insira o CPF'}
+                helperText={error === 'Insira o CPF' && error}
+                inputProps={{
+                  autoComplete: 'off',
+                  maxLength: 14
+                }}
+                className={classes.input}
+              />
+            )}
           />
-          <TextField
-            type="text"
-            id="outlined-basic"
-            label="Grupo de usuário"
-            variant="outlined"
-            size="small"
-            error={error === 'Insira o grupo de usuário'}
-            helperText={error === 'Insira o grupo de usuário' && error}
-            InputProps={{
-              autoComplete: 'off'
-            }}
-            className={classes.input}
-            {...register('grupousuario' )}
-          />
-          <TextField
-            type="text"
-            id="outlined-basic"
-            label="Situação"
-            variant="outlined"
-            size="small"
-            error={error === 'Insira a situação'}
-            helperText={error === 'Insira a situação' && error}
-            InputProps={{
-              autoComplete: 'off'
-            }}
-            className={classes.input}
-            {...register('situacao' )}
+          <Controller
+            control={control}
+            name="nascimento"
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                type="date"
+                id="outlined-basic"
+                label="Data de nascimento"
+                value={value ? value : newDate()}
+                onChange={onChange}
+                variant="outlined"
+                size="small"
+                error={error === 'Insira a data de nascimento'}
+                helperText={error === 'Insira a data de nascimento' && error}
+                InputProps={{
+                  autoComplete: 'off',
+                }}
+                className={classes.input}
+              />
+            )}
           />
           <Button className={classes.button} type="submit">
             {loading ? <Loading loadingSize={16} /> : 'Salvar'}

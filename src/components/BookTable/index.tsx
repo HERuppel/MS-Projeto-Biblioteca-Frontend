@@ -8,6 +8,9 @@ import { IBook, IBookList } from '../../interfaces';
 import { useBook } from '../../hooks/bookApi';
 
 import BookForm from '../BookForm';
+import { theme } from '../../global/theme';
+
+import Swal from 'sweetalert2';
 
 interface IBookTable {
   bookList: IBookList[];
@@ -48,6 +51,35 @@ const BookTable = ({ bookList }: IBookTable): JSX.Element => {
       }
     };
 
+    const areYouSure = (toCheckBook: IBook) => {
+      Swal.fire({
+        title: 'Tem certeza que deseja deletar?',
+        text: 'Isso não poderá ser desfeito!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: theme.palette.primary.main,
+        cancelButtonColor: theme.palette.error.main,
+        confirmButtonText: 'Deletar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+          container: classes.swal
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await handleDelete(toCheckBook);
+          Swal.fire({
+            title: 'Livro deletado!',
+            icon: 'success',
+            confirmButtonColor: theme.palette.primary.main,
+            customClass: {
+              container: classes.swal
+            }
+          });
+        }
+        handleClose();
+      });
+    };
+
     return (
       <>
         <TableRow className={classes.root}>
@@ -70,7 +102,7 @@ const BookTable = ({ bookList }: IBookTable): JSX.Element => {
               onClose={handleClose}
             >
               <MenuItem onClick={() => handleEdit(book)}>Editar</MenuItem>
-              <MenuItem onClick={() => handleDelete(book)}>Excluir</MenuItem>
+              <MenuItem onClick={() => areYouSure(book)}>Excluir</MenuItem>
             </Menu>
           </TableCell>
         </TableRow>

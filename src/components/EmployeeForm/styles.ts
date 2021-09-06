@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     form: {
       display: 'grid',
-      gridTemplateRows: 'repeat(7, 1fr)',
+      gridTemplateRows: 'repeat(5, 1fr)',
       placeItems: 'center',
       gap: 40,
     },

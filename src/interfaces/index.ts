@@ -30,6 +30,7 @@ export interface IEmployee {
   cpf: string
   nascimento: string
   grupousuario: string
+  senha?: string
 }
 
 export interface IEmployeeList {

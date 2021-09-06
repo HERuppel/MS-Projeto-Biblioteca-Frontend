@@ -79,14 +79,18 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
 
         const response = await api.get(url);
 
+        console.log(response.data)
+
         const data: IEmployeeList[] = [
             ...employeeList,
-            { page: currentPage, values: response.data.data }
+            { page: currentPage, values: response.data.data.itens }
         ];
+
+        console.log(data)
 
         setEmployeeList(data);
         data.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
-        setPageCount(Math.ceil(response.data.data.length/offset));
+        setPageCount(Math.ceil(response.data.data.count/offset));
     }
 
     const remove = async (id: string): Promise<void> => {
@@ -106,8 +110,8 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
         const url = 'funcionario/recuperar';
         const response = await api.get(url);
 
-        setEmployeeList([{ page: currentPage, values: response.data.data }]);
-        setPageCount(Math.ceil(response.data.data.length / offset));
+        setEmployeeList([{ page: currentPage, values: response.data.data.itens }]);
+        setPageCount(Math.ceil(response.data.data.count / offset));
     }
 
     const update = async ({ id, data }: IUpdate): Promise<void> => {

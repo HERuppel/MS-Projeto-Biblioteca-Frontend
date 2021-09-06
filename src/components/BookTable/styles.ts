@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 'bold'
       }
     },
+    swal: {
+      zIndex: 10000,
+      fontFamily: 'Roboto'
+    }
   })
 );
 

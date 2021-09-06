@@ -7,6 +7,10 @@ import { IEmployee, IEmployeeList } from '../../interfaces';
 import useStyles from './styles';
 import { useEmployee } from '../../hooks/employeeApi';
 import EmployeeForm from '../EmployeeForm';
+import { SituacaoFuncionario } from '../../utils/enums';
+
+import Swal from 'sweetalert2';
+import { theme } from '../../global/theme';
 
 interface IEmployeeTable {
   employeeList: IEmployeeList[];
@@ -47,16 +51,46 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
       }
     };
 
+    const areYouSure = (toCheckEmployee: IEmployee) => {
+      Swal.fire({
+        title: 'Tem certeza que deseja deletar?',
+        text: 'Isso não poderá ser desfeito!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: theme.palette.primary.main,
+        cancelButtonColor: theme.palette.error.main,
+        confirmButtonText: 'Deletar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+          container: classes.swal
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await handleDelete(toCheckEmployee);
+          Swal.fire({
+            title: 'Registro de funcionário deletado!',
+            icon: 'success',
+            confirmButtonColor: theme.palette.primary.main,
+            customClass: {
+              container: classes.swal
+            }
+          });
+        }
+        handleClose();
+      });
+    };
+
+    const maskToDate = (date: string) => date.split('-').reverse().join('/');
+
     return (
       <>
         <TableRow className={classes.root}>
-          <TableCell component="th" scope="row">{employee.nome}</TableCell>
+          <TableCell component="th" scope="row" align="center">{employee.nome}</TableCell>
           <TableCell align="center">{employee.email}</TableCell>
           <TableCell align="center">{employee.telefone}</TableCell>
           <TableCell align="center">{employee.cpf}</TableCell>
-          <TableCell align="center">{employee.nascimento}</TableCell>
-          <TableCell align="center">{employee.grupousuario}</TableCell>
-          <TableCell align="center">{employee.situacao}</TableCell>
+          <TableCell align="center">{maskToDate(employee.nascimento)}</TableCell>
+          <TableCell align="center">{SituacaoFuncionario[employee.situacao]}</TableCell>
           <TableCell align="center">
             <IconButton aria-label="expand row" size="small" onClick={handleClick}>
               <MoreHoriz />
@@ -69,7 +103,7 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
               onClose={handleClose}
             >
               <MenuItem onClick={() => handleEdit(employee)}>Editar</MenuItem>
-              <MenuItem onClick={() => handleDelete(employee)}>Excluir</MenuItem>
+              <MenuItem onClick={() => areYouSure(employee)}>Excluir</MenuItem>
             </Menu>
           </TableCell>
         </TableRow>
@@ -92,7 +126,6 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
             <TableCell align="center">Telefone</TableCell>
             <TableCell align="center">CPF</TableCell>
             <TableCell align="center">Data de nascimento</TableCell>
-            <TableCell align="center">Grupo</TableCell>
             <TableCell align="center">Situação</TableCell>
             <TableCell align="center">Ações</TableCell>
           </TableRow>
