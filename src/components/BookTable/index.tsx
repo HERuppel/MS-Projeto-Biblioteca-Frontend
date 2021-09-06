@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useStyles from './styles';
-import { TableRow, TableCell, IconButton, TableContainer, Paper, Table as UITable, TableHead, TableBody, MenuItem, Menu, Typography, Button } from '@material-ui/core';
+import { TableRow, TableCell, IconButton, TableContainer, Paper, Table as UITable, TableHead, TableBody, MenuItem, Menu, Typography, Button, makeStyles } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { MoreHoriz } from '@material-ui/icons';
 
@@ -20,8 +20,23 @@ interface IRow {
   book: IBook;
 }
 
+const buttonStyle = makeStyles({
+  add: {
+    width: '20%',
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
+
+    '&:hover': {
+      background: theme.palette.primary.dark
+    }
+  }
+})
+
+
+
 const BookTable = ({ bookList }: IBookTable): JSX.Element => {
   const classes = useStyles();
+  const button = buttonStyle();
   const { currentPage, setCurrentPage, pageCount, remove } = useBook();
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [bookToEdit, setBookToEdit] = useState<IBook>({} as IBook);
@@ -115,7 +130,7 @@ const BookTable = ({ bookList }: IBookTable): JSX.Element => {
     <div>
       <div className={classes.header}>
         <Typography color="primary" variant="h2">Livros</Typography>
-        <Button className={classes.addButton} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
+        <Button className={button.add} onClick={() => setFormOpen(true)}>Adicionar Livro</Button>
       </div>
       <TableContainer component={Paper} className={classes.container}>
         <UITable>
