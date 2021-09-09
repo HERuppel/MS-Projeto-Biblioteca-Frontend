@@ -32,8 +32,6 @@ const buttonStyle = makeStyles({
   }
 })
 
-
-
 const BookTable = ({ bookList }: IBookTable): JSX.Element => {
   const classes = useStyles();
   const button = buttonStyle();

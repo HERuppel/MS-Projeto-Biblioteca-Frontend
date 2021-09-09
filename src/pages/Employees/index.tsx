@@ -21,7 +21,8 @@ const Employees: React.FC = () => {
         setLoading(false);
       }
     })();
-  }, [currentPage, load]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   return (
     <div className={classes.container}>

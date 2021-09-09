@@ -79,25 +79,27 @@ export const BookListProvider: React.FC = ({ children }) => {
 
     const update = async ({ id, data }: IUpdate): Promise<void> => {
 
-        const response = await api.post(`livro/manter`,{ ...data, id });
+        await api.post(`livro/manter`,{ ...data, id });
 
-        const currentPageList = bookList.filter((item: IBookList) =>
-            item.page === currentPage ? item : null
-        );
+        await load();
 
-        const indexToUse = currentPageList[0]?.values?.findIndex(
-            (item: IBook) => item.id === response.data.data.id
-        );
+        // const currentPageList = bookList.filter((item: IBookList) =>
+        //     item.page === currentPage ? item : null
+        // );
 
-        currentPageList[0].values[indexToUse] = { ...response.data.data };
+        // const indexToUse = currentPageList[0]?.values?.findIndex(
+        //     (item: IBook) => item.id === response.data.data.id
+        // );
 
-        const newList = bookList.filter((item: IBookList) =>
-            item.page !== currentPage ? item : null
-        );
+        // currentPageList[0].values[indexToUse] = { ...response.data.data };
 
-        newList.push(currentPageList[0]);
+        // const newList = bookList.filter((item: IBookList) =>
+        //     item.page !== currentPage ? item : null
+        // );
 
-        setBookList(newList);
+        // newList.push(currentPageList[0]);
+
+        // setBookList(newList);
     }
 
     return (

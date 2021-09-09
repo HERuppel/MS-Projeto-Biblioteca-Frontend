@@ -34,63 +34,21 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
     const reset = () => { setEmployeeList([]); }
 
     const create = async (employee: IEmployee): Promise<void> => {
-      const res = await api.post('funcionario/manter', { ...employee })
+      await api.post('funcionario/manter', { ...employee })
 
-      const newEmployee: IEmployee = res.data.data;
-
-      console.log(currentPage, pageCount);
-
-      if (employeeList[pageCount - 1].values.length === 10) {
-        const newValues: IEmployee[] = [newEmployee]
-
-        const data: IEmployeeList[] = [
-          ...employeeList,
-          { page: currentPage + 1, values: newValues }
-        ]
-
-        setEmployeeList(data);
-        setPageCount(pageCount + 1);
-        return;
-      };
-
-      const listCopy: IEmployeeList[] = { ...employeeList }
-
-      const newValues: IEmployee[] = listCopy[pageCount - 1].values;
-
-      newValues.push(newEmployee);
-
-
-      const data: IEmployeeList[] = [
-        ...employeeList,
-        { page: currentPage, values: newValues }
-      ]
-
-      setEmployeeList(data);
+      await load();
     }
 
     const load = async (): Promise<void> => {
+      const response = await api.get('funcionario/recuperar');
 
-        const exists = employeeList.filter((item: IEmployeeList) => (
-            item.page === currentPage? item : null
-        ));
-        if (exists.length !== 0) return;
+      const data: IEmployeeList[] = [
+          { page: currentPage, values: response.data.data.itens }
+      ];
 
-        const url = 'funcionario/recuperar'
-
-        const response = await api.get(url);
-
-        console.log(response.data)
-
-        const data: IEmployeeList[] = [
-            ...employeeList,
-            { page: currentPage, values: response.data.data.itens }
-        ];
-
-        console.log(data)
-
-        setEmployeeList(data);
-        data.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
-        setPageCount(Math.ceil(response.data.data.count/offset));
+      setEmployeeList(data);
+      data.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
+      setPageCount(Math.ceil(response.data.data.count/offset));
     }
 
     const remove = async (id: string): Promise<void> => {
@@ -116,25 +74,26 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
 
     const update = async ({ id, data }: IUpdate): Promise<void> => {
 
-        const response = await api.post(`funcionario/manter`, { ...data, id });
+        await api.post(`funcionario/manter`, { ...data, id });
 
-        const currentPageList = employeeList.filter((item: IEmployeeList) =>
-            item.page === currentPage ? item : null
-        );
+        await load();
+        // const currentPageList = employeeList.filter((item: IEmployeeList) =>
+        //     item.page === currentPage ? item : null
+        // );
 
-        const indexToUse = currentPageList[0]?.values?.findIndex(
-            (item: IEmployee) => item.id === response.data.data.id
-        );
+        // const indexToUse = currentPageList[0]?.values?.findIndex(
+        //     (item: IEmployee) => item.id === response.data.data.id
+        // );
 
-        currentPageList[0].values[indexToUse] = { ...response.data.data };
+        // currentPageList[0].values[indexToUse] = { ...response.data.data };
 
-        const newList = employeeList.filter((item: IEmployeeList) =>
-            item.page !== currentPage ? item : null
-        );
+        // const newList = employeeList.filter((item: IEmployeeList) =>
+        //     item.page !== currentPage ? item : null
+        // );
 
-        newList.push(currentPageList[0]);
+        // newList.push(currentPageList[0]);
 
-        setEmployeeList(newList);
+        // setEmployeeList(newList);
     }
 
     return (

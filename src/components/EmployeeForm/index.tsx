@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, TextField, Button, Typography } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Modal, TextField, Button, Typography, IconButton } from '@material-ui/core';
+import { Close, VisibilityOffOutlined, VisibilityOutlined } from '@material-ui/icons';
 
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { IEmployee } from '../../interfaces';
@@ -31,6 +31,7 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
   const { create, update } = useEmployee();
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [secure, setSecure] = useState<boolean>(true);
   const { register, handleSubmit, reset, control } = useForm<IEmployee>({ defaultValues: employeeToEdit ? { ...employeeToEdit } : {} as IEmployee });
   const edit = Object.values(employeeToEdit).length !== 0 ? true : false;
 
@@ -132,22 +133,29 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
             size="small"
             error={error === 'Insira o email'}
             helperText={error === 'Insira o email' && error}
-            InputProps={{
+            inputProps={{
               autoComplete: 'off'
             }}
             className={classes.input}
             {...register('email' )}
           />
           <TextField
-            type="text"
+            type={secure ? 'password' : 'text'}
             id="outlined-basic"
             label="Senha"
             variant="outlined"
             size="small"
-            error={error === 'Insira o senha'}
-            helperText={error === 'Insira o senha' && error}
-            InputProps={{
+            error={error === 'Insira a senha'}
+            helperText={error === 'Insira a senha' && error}
+            inputProps={{
               autoComplete: 'off'
+            }}
+            InputProps={{
+              endAdornment: (
+                <IconButton className={classes.visibility} onClick={() => setSecure(!secure)}>
+                  {secure ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                </IconButton>
+              )
             }}
             className={classes.input}
             {...register('senha' )}

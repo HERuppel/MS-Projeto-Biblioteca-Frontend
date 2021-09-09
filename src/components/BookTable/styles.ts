@@ -19,15 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       fontWeight: 'bold',
     },
-    addButton: {
-      width: '20%',
-      background: theme.palette.primary.main,
-      color: theme.palette.common.white,
-
-      '&:hover': {
-        background: theme.palette.primary.dark
-      }
-    },
     box: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',

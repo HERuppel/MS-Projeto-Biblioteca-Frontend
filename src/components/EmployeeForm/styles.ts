@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         background: theme.palette.primary.dark
       }
+    },
+    visibility: {
+      color: theme.palette.primary.main
     }
   })
 )
