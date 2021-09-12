@@ -43,7 +43,7 @@ export const EmployeeListProvider: React.FC = ({ children }) => {
       const response = await api.get('funcionario/recuperar');
 
       const data: IEmployeeList[] = [
-          { page: currentPage, values: response.data.data.itens }
+        { page: currentPage, values: response.data.data.itens }
       ];
 
       setEmployeeList(data);

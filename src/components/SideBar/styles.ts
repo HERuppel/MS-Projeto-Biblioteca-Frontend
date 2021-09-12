@@ -36,6 +36,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     activeNavLink: {
       background: theme.palette.primary.main
+    },
+    welcome: {
+      padding: '20px 15px',
+      color: theme.palette.common.white,
+      fontSize: 20,
+    },
+    logout: {
+      color: theme.palette.common.white,
+      fontSize: 20,
+      position: 'absolute',
+      bottom: 0,
+      padding: '20px 15px',
     }
   })
 );

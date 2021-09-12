@@ -85,12 +85,12 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
     return (
       <>
         <TableRow className={classes.root}>
-          <TableCell component="th" scope="row" align="center">{employee.nome}</TableCell>
-          <TableCell align="center">{employee.email}</TableCell>
-          <TableCell align="center">{employee.telefone}</TableCell>
-          <TableCell align="center">{employee.cpf}</TableCell>
-          <TableCell align="center">{maskToDate(employee.nascimento)}</TableCell>
-          <TableCell align="center">{SituacaoFuncionario[employee.situacao]}</TableCell>
+          <TableCell component="th" scope="row" align="left">{employee.nome}</TableCell>
+          <TableCell align="left">{employee.email}</TableCell>
+          <TableCell align="left">{employee.telefone}</TableCell>
+          <TableCell align="left">{employee.cpf}</TableCell>
+          <TableCell align="left">{maskToDate(employee.nascimento)}</TableCell>
+          <TableCell align="left">{SituacaoFuncionario[employee.situacao]}</TableCell>
           <TableCell align="center">
             <IconButton aria-label="expand row" size="small" onClick={handleClick}>
               <MoreHoriz />
@@ -121,12 +121,12 @@ const EmployeeTable: React.FC<IEmployeeTable> = ({ employeeList }: IEmployeeTabl
       <UITable>
         <TableHead>
           <TableRow>
-            <TableCell align="center">Nome</TableCell>
-            <TableCell align="center">E-mail</TableCell>
-            <TableCell align="center">Telefone</TableCell>
-            <TableCell align="center">CPF</TableCell>
-            <TableCell align="center">Data de nascimento</TableCell>
-            <TableCell align="center">Situação</TableCell>
+            <TableCell align="left">Nome</TableCell>
+            <TableCell align="left">E-mail</TableCell>
+            <TableCell align="left">Telefone</TableCell>
+            <TableCell align="left">CPF</TableCell>
+            <TableCell align="left">Data de nascimento</TableCell>
+            <TableCell align="left">Situação</TableCell>
             <TableCell align="center">Ações</TableCell>
           </TableRow>
         </TableHead>

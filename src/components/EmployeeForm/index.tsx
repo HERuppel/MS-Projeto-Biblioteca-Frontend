@@ -8,6 +8,9 @@ import useStyles from './styles';
 import { Loading } from '../../common';
 import { useEmployee } from '../../hooks/employeeApi';
 
+import Swal from 'sweetalert2';
+import { theme } from '../../global/theme';
+
 interface IEmployeeForm {
   open: boolean;
   onClose: () => void;
@@ -23,7 +26,7 @@ const initialState = {
   cpf: '',
   nascimento: '',
   grupousuario: '',
-  situacao: 0,
+  situacao: 1,
 }
 
 const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, clearEmployee }: IEmployeeForm) => {
@@ -47,12 +50,20 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
       setLoading(true);
       edit
         ? await update({ id: employeeToEdit?.id, data})
-        : await create(data);
+        : await create({ ...data, situacao: 1 });
     } catch (e) {
       setError(e);
     } finally {
+      Swal.fire({
+        icon: 'success',
+        confirmButtonColor: theme.palette.primary.main,
+        text: 'O funcionário foi cadastrado',
+        confirmButtonText: 'Ok',
+        title: 'Sucesso!'
+      });
       resetForm();
       setLoading(false);
+      onClose();
     }
   }
 
@@ -195,7 +206,7 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
                 variant="outlined"
                 size="small"
                 error={error === 'Insira o CPF'}
-                helperText={error === 'Insira o CPF' && error}
+                helperText={error === 'Insira o telefone' ? error : 'Somente números'}
                 inputProps={{
                   autoComplete: 'off',
                   maxLength: 14

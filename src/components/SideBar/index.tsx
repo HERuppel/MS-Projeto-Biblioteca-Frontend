@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Drawer, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { Group, MenuBook } from '@material-ui/icons';
+import { Drawer, List, ListItem, ListItemText, Typography, IconButton } from '@material-ui/core';
+import { Group, MenuBook, ExitToAppOutlined } from '@material-ui/icons';
 
 import useStyles from './styles';
 
@@ -19,6 +19,9 @@ const SideBar: React.FC = () => {
           Biblioteca DPM
         </Typography>
       </div>
+      <div className={classes.welcome}>
+        <Typography>Olá, Cleber!</Typography>
+      </div>
       <List>
         <ListItem className={classes.navLink} component={NavLink} to="/main/books" activeClassName={classes.activeNavLink} key="books">
           <MenuBook style={{ fontSize: 35, paddingRight: 6 }} />
@@ -29,6 +32,10 @@ const SideBar: React.FC = () => {
           <ListItemText className={classes.itemText} primary="Funcionários" />
         </ListItem>
       </List>
+      <IconButton className={classes.logout}>
+        <ExitToAppOutlined style={{ marginRight: 50 }} />
+        <Typography>Logout</Typography>
+      </IconButton>
     </div>
   );
 

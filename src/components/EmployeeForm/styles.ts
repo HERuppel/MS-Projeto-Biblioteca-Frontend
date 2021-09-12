@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '80%',
       height: 30,
       maxWidth: '600px',
+      paddingBottom: 5,
     },
     pageNQtd: {
       display: 'grid',
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     visibility: {
       color: theme.palette.primary.main
-    }
+    },
   })
 )
 

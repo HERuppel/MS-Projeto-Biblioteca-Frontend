@@ -96,13 +96,13 @@ const BookTable = ({ bookList }: IBookTable): JSX.Element => {
     return (
       <>
         <TableRow className={classes.root}>
-          <TableCell component="th" scope="row">{book.nome}</TableCell>
-          <TableCell align="center">{book.autor}</TableCell>
-          <TableCell align="center">{book.paginas}</TableCell>
-          <TableCell align="center">{book.editora}</TableCell>
-          <TableCell align="center">{book.edicao}</TableCell>
-          <TableCell align="center">{book.cdd}</TableCell>
-          <TableCell align="center">{book.qtdAtual}/{book.qtdEstoque}</TableCell>
+          <TableCell component="th" scope="row" align="left">{book.nome}</TableCell>
+          <TableCell align="left">{book.autor}</TableCell>
+          <TableCell align="left">{book.paginas}</TableCell>
+          <TableCell align="left">{book.editora}</TableCell>
+          <TableCell align="left">{book.edicao}</TableCell>
+          <TableCell align="left">{book.cdd}</TableCell>
+          <TableCell align="left">{book.qtdAtual} de {book.qtdEstoque}</TableCell>
           <TableCell align="center">
             <IconButton aria-label="expand row" size="small" onClick={handleClick}>
               <MoreHoriz />
@@ -134,13 +134,13 @@ const BookTable = ({ bookList }: IBookTable): JSX.Element => {
         <UITable>
           <TableHead>
             <TableRow>
-              <TableCell align="center">Nome</TableCell>
-              <TableCell align="center">Autor</TableCell>
-              <TableCell align="center">Páginas</TableCell>
-              <TableCell align="center">Editora</TableCell>
-              <TableCell align="center">Edição</TableCell>
-              <TableCell align="center">Classificação (CDD)</TableCell>
-              <TableCell align="center">Quantidade</TableCell>
+              <TableCell align="left">Nome</TableCell>
+              <TableCell align="left">Autor</TableCell>
+              <TableCell align="left">Páginas</TableCell>
+              <TableCell align="left">Editora</TableCell>
+              <TableCell align="left">Edição</TableCell>
+              <TableCell align="left">Classificação (CDD)</TableCell>
+              <TableCell align="left">Quantidade</TableCell>
               <TableCell align="center">Ações</TableCell>
             </TableRow>
           </TableHead>

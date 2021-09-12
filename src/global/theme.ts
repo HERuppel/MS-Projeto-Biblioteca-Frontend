@@ -17,7 +17,7 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: [
-      'Merriweather',
+      'Lato',
       'sans-serif'
     ].join(','),
   },

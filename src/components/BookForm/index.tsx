@@ -8,6 +8,9 @@ import useStyles from './styles';
 import { Loading } from '../../common';
 import { useBook } from '../../hooks/bookApi';
 
+import Swal from 'sweetalert2';
+import { theme } from '../../global/theme';
+
 interface IBookForm {
   open: boolean;
   onClose: () => void;
@@ -55,6 +58,14 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit, clearBook }:
     } finally {
       resetForm();
       setLoading(false);
+      onClose();
+      Swal.fire({
+        icon: 'success',
+        confirmButtonColor: theme.palette.primary.main,
+        text: 'O livro foi cadastrado',
+        confirmButtonText: 'Ok',
+        title: 'Sucesso!'
+      });
     }
   }
 
