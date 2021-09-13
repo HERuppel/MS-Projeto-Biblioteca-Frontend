@@ -150,27 +150,29 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
             className={classes.input}
             {...register('email' )}
           />
-          <TextField
-            type={secure ? 'password' : 'text'}
-            id="outlined-basic"
-            label="Senha"
-            variant="outlined"
-            size="small"
-            error={error === 'Insira a senha'}
-            helperText={error === 'Insira a senha' && error}
-            inputProps={{
-              autoComplete: 'off'
-            }}
-            InputProps={{
-              endAdornment: (
-                <IconButton className={classes.visibility} onClick={() => setSecure(!secure)}>
-                  {secure ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
-                </IconButton>
-              )
-            }}
-            className={classes.input}
-            {...register('senha' )}
-          />
+          {
+          !edit &&
+            <TextField
+              type={secure ? 'password' : 'text'}
+              id="outlined-basic"
+              label="Senha"
+              variant="outlined"
+              size="small"
+              error={error === 'Insira a senha'}
+              helperText={error === 'Insira a senha' && error}
+              inputProps={{
+                autoComplete: 'off'
+              }}
+              InputProps={{
+                endAdornment: (
+                  <IconButton className={classes.visibility} onClick={() => setSecure(!secure)}>
+                    {secure ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                  </IconButton>
+                )
+              }}
+              className={classes.input}
+              {...register('senha' )}
+            />}
           <Controller
             name="telefone"
             control={control}
