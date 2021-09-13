@@ -10,15 +10,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: 250,
-      backgroundColor: theme.palette.primary.dark
+      backgroundColor: theme.palette.primary.dark,
     },
 
     header: {
       width: '100%',
       height: 70,
       display: 'flex',
-      justifyContent: 'center',
       alignItems: 'center',
+      gap: 40,
       color: '#E5e5e5'
     },
     itemText: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     welcome: {
       padding: '20px 15px',
       color: theme.palette.common.white,
-      fontSize: 20,
+      opacity: 0.7
     },
     logout: {
       color: theme.palette.common.white,

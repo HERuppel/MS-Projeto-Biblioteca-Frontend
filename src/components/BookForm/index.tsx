@@ -149,7 +149,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit, clearBook }:
             {...register('editora' )}
           />
           <TextField
-            type="text"
+            type="number"
             id="outlined-basic"
             label="CDD"
             variant="outlined"
@@ -163,7 +163,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit, clearBook }:
             {...register('cdd' )}
           />
           <TextField
-            type="text"
+            type="number"
             id="outlined-basic"
             label="Páginas"
             variant="outlined"
@@ -177,7 +177,7 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit, clearBook }:
             {...register('paginas' )}
           />
           <TextField
-            type="text"
+            type="number"
             id="outlined-basic"
             label="Quantidade do estoque"
             variant="outlined"

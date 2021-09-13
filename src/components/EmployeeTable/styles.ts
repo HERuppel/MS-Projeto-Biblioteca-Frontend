@@ -9,7 +9,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       width: '100%',
-      padding: '0 10px 10px 10px'
+      padding: '0 10px 10px 10px',
+      minHeight: '80vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between'
     },
     header: {
       display: 'flex',
