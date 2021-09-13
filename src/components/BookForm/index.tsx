@@ -53,19 +53,27 @@ const BookForm: React.FC<IBookForm> = ({ open, onClose, bookToEdit, clearBook }:
       edit
         ? await update({ id: bookToEdit?.id, data})
         : await create(data);
+
+        Swal.fire({
+          icon: 'success',
+          confirmButtonColor: theme.palette.primary.main,
+          text: 'O livro foi cadastrado',
+          confirmButtonText: 'Ok',
+          title: 'Sucesso!'
+        });
     } catch (e) {
       setError(e);
+      Swal.fire({
+        icon: 'error',
+        confirmButtonColor: theme.palette.primary.main,
+        text: e?.response?.data?.message || 'Erro no cadastro!',
+        confirmButtonText: 'Ok',
+        title: 'Erro!'
+      });
     } finally {
       resetForm();
       setLoading(false);
       onClose();
-      Swal.fire({
-        icon: 'success',
-        confirmButtonColor: theme.palette.primary.main,
-        text: 'O livro foi cadastrado',
-        confirmButtonText: 'Ok',
-        title: 'Sucesso!'
-      });
     }
   }
 

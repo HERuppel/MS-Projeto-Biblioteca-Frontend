@@ -51,16 +51,23 @@ const EmployeeForm: React.FC<IEmployeeForm> = ({ open, onClose, employeeToEdit, 
       edit
         ? await update({ id: employeeToEdit?.id, data})
         : await create({ ...data, situacao: 1 });
+        Swal.fire({
+          icon: 'success',
+          confirmButtonColor: theme.palette.primary.main,
+          text: 'O funcionário foi cadastrado',
+          confirmButtonText: 'Ok',
+          title: 'Sucesso!'
+        });
     } catch (e) {
       setError(e);
-    } finally {
       Swal.fire({
-        icon: 'success',
+        icon: 'error',
         confirmButtonColor: theme.palette.primary.main,
-        text: 'O funcionário foi cadastrado',
+        text: e?.response?.data?.message || 'Ocorreu um erro no cadastro!',
         confirmButtonText: 'Ok',
-        title: 'Sucesso!'
+        title: 'Erro!'
       });
+    } finally {
       resetForm();
       setLoading(false);
       onClose();
